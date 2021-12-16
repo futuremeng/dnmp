@@ -352,5 +352,65 @@ services:
 #    networks:
 #      - default
 
+  tomcat:
+    image: tomcat:${TOMCAT_VERSION}
+    container_name: tomcat
+    ports:
+      - "${TOMCAT_HTTP_PORT}:8080"
+    volumes:
+      - ${TOMCAT_SOURCE_DIR}:/usr/local/tomcat/webapps/
+      - ${TOMCAT_CONF_FILE}:/usr/local/tomcat/conf/server.xml
+      - ${TOMCAT_LOG_DIR}:/usr/local/tomcat/logs/:rw
+    environment:
+      TZ: "$TZ"
+    restart: always
+    cap_add:
+      - SYS_PTRACE
+    networks:
+      - default
+
+
+  minio:
+    image: minio/minio
+    container_name: minio
+    restart: always
+    ports:
+      - "${MINIO_SERVER_PORT}:9000"
+      - "${MINIO_CONSOLE_PORT}:${MINIO_CONSOLE_PORT}"
+    command: server /data --console-address ":${MINIO_CONSOLE_PORT}" #指定容器中的目录 /data
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}     #管理后台用户名
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD} #管理后台密码，最小8个字符
+    volumes:
+      - ${MINIO_DATA_DIR}:/data:rw              #映射当前目录下的data目录至容器内/data目录
+      - ${MINIO_CONF_DIR}:/root/.minio/     #映射配置目录
+    networks:
+      - default
+
+  jenkins:
+    image: jenkins/jenkins:${JENKINS_VERSION}
+    container_name: jenkins
+    volumes:
+        - ${JENKINS_HOME_DIR}:/var/jenkins_home
+        - ${JENKINS_CERTS_DIR}:/certs/client
+        - ${HTML_SOURCE_DIR}:/www/:rw
+        - ${TOMCAT_SOURCE_DIR}:/webapps/:rw
+        - /var/run/docker.sock:/var/run/docker.sock
+        - /usr/bin/docker:/usr/bin/docker
+        - /usr/lib/x86_64-linux-gnu/libltdl.so.7:/usr/lib/x86_64-linux-gnu/libltdl.so.7
+    ports:
+        - "${JENKINS_HTTP_PORT}:8080"
+    expose:
+        - "8080"
+        - "50000"
+    privileged: true
+    user: root
+    restart: always
+    environment:
+        TZ: "$TZ"
+        JAVA_OPTS: '-Djava.util.logging.config.file=/var/jenkins_home/log.properties'
+    networks:
+      - default
+
 networks:
   default:
