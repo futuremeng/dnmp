@@ -412,5 +412,27 @@ services:
     networks:
       - default
 
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    hostname: prometheus
+    ports:
+      - "${PROMETHEUS_HTTP_PORT}:9090"
+    volumes:
+      - ${PROMETHEUS_CONF_FILE}:/etc/prometheus/prometheus.yml
+    networks:
+      - default
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    hostname: grafana
+    ports:
+      - "${GRAFAMA_HTTP_PORT}:3000"
+    volumes:
+      - ${GRAFAMA_CONF_FILE}:/etc/grafana/grafana.ini
+    networks:
+      - default
+
 networks:
   default:
