@@ -358,7 +358,7 @@ services:
     ports:
       - "${TOMCAT_HTTP_PORT}:8080"
     volumes:
-      - ${TOMCAT_SOURCE_DIR}:/usr/local/tomcat/webapps/
+      - ${TOMCAT_WEBAPPS_DIR}:/usr/local/tomcat/webapps/
       - ${TOMCAT_CONF_FILE}:/usr/local/tomcat/conf/server.xml
       - ${TOMCAT_LOG_DIR}:/usr/local/tomcat/logs/:rw
     environment:
@@ -393,8 +393,8 @@ services:
     volumes:
         - ${JENKINS_HOME_DIR}:/var/jenkins_home
         - ${JENKINS_CERTS_DIR}:/certs/client
-        - ${HTML_SOURCE_DIR}:/www/:rw
-        - ${TOMCAT_SOURCE_DIR}:/webapps/:rw
+        - ${SOURCE_DIR}:/www/:rw
+        - ${TOMCAT_WEBAPPS_DIR}:/webapps/:rw
         - /var/run/docker.sock:/var/run/docker.sock
         - /usr/bin/docker:/usr/bin/docker
         - /usr/lib/x86_64-linux-gnu/libltdl.so.7:/usr/lib/x86_64-linux-gnu/libltdl.so.7
