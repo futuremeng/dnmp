@@ -163,6 +163,7 @@ services:
 #       - ${OPENRESTY_LOG_DIR}:/var/log/nginx/:rw
 #    environment:
 #      TZ: "$TZ"
+#    restart: always
 #    networks:
 #      - default
 
@@ -188,6 +189,7 @@ services:
 #      - "${MEMCACHED_HOST_PORT}:11211"
 #    environment:
 #       MEMCACHED_CACHE_SIZE: "${MEMCACHED_CACHE_SIZE}"
+#    restart: always
 #    networks:
 #      - default
 
@@ -248,6 +250,7 @@ services:
 #      - ${DATA_DIR}/mongo_key:/mongo:rw
 #    ports:
 #       - "${MONGODB_HOST_PORT}:27017"
+#    restart: always
 #    networks:
 #       - default
 #    command:
@@ -421,6 +424,7 @@ services:
       - "${PROMETHEUS_HTTP_PORT}:9090"
     volumes:
       - ${PROMETHEUS_CONF_FILE}:/etc/prometheus/prometheus.yml
+    restart: always
     networks:
       - default
 
@@ -432,6 +436,7 @@ services:
       - "${GRAFAMA_HTTP_PORT}:3000"
     volumes:
       - ${GRAFAMA_CONF_FILE}:/etc/grafana/grafana.ini
+    restart: always
     networks:
       - default
 
