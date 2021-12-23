@@ -27,30 +27,34 @@ DNMP项目特点：
 12. 支持快速安装扩展命令 `install-php-extensions apcu`
 
 # 目录
-- [1.目录结构](#1目录结构)
-- [2.快速使用](#2快速使用)
-- [3.PHP和扩展](#3PHP和扩展)
-    - [3.1 切换Nginx使用的PHP版本](#31-切换Nginx使用的PHP版本)
-    - [3.2 安装PHP扩展](#32-安装PHP扩展)
+- [目录](#目录)
+  - [1.目录结构](#1目录结构)
+  - [2.快速使用](#2快速使用)
+  - [3.PHP和扩展](#3php和扩展)
+    - [3.1 切换Nginx使用的PHP版本](#31-切换nginx使用的php版本)
+    - [3.2 安装PHP扩展](#32-安装php扩展)
     - [3.3 快速安装php扩展](#33-快速安装php扩展)
     - [3.4 Host中使用php命令行（php-cli）](#34-host中使用php命令行php-cli)
     - [3.5 使用composer](#35-使用composer)
-- [4.管理命令](#4管理命令)
+  - [4.管理命令](#4管理命令)
     - [4.1 服务器启动和构建命令](#41-服务器启动和构建命令)
     - [4.2 添加快捷命令](#42-添加快捷命令)
-- [5.使用Log](#5使用log)
+    - [4.3 查看docker网络](#43-查看docker网络)
+  - [5.使用Log](#5使用log)
     - [5.1 Nginx日志](#51-nginx日志)
     - [5.2 PHP-FPM日志](#52-php-fpm日志)
     - [5.3 MySQL日志](#53-mysql日志)
-- [6.数据库管理](#6数据库管理)
+  - [6.数据库管理](#6数据库管理)
     - [6.1 phpMyAdmin](#61-phpmyadmin)
     - [6.2 phpRedisAdmin](#62-phpredisadmin)
-- [7.在正式环境中安全使用](#7在正式环境中安全使用)
-- [8.常见问题](#8常见问题)
+  - [7.在正式环境中安全使用](#7在正式环境中安全使用)
+  - [8 常见问题](#8-常见问题)
     - [8.1 如何在PHP代码中使用curl？](#81-如何在php代码中使用curl)
-    - [8.2 Docker使用cron定时任务](#82-Docker使用cron定时任务)
-    - [8.3 Docker容器时间](#83-Docker容器时间)
-    - [8.4 如何连接MySQL和Redis服务器](#84-如何连接MySQL和Redis服务器)
+    - [8.2 Docker使用cron定时任务](#82-docker使用cron定时任务)
+    - [8.3 Docker容器时间](#83-docker容器时间)
+    - [8.4 如何连接MySQL和Redis服务器](#84-如何连接mysql和redis服务器)
+    - [8.5 容器内的php如何连接宿主机MySQL](#85-容器内的php如何连接宿主机mysql)
+  - [License](#license)
 
 
 ## 1.目录结构
@@ -516,3 +520,5 @@ docker0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
 MIT
 
 
+echo  -n 'dnmp:' >> .htpasswd
+openssl passwd -apr1 dnmp >> .htpasswd

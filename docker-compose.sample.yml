@@ -15,6 +15,7 @@ services:
       - ${SOURCE_DIR}:/www/:rw
       - ${NGINX_SSL_CERTIFICATE_DIR}:/ssl:rw
       - ${NGINX_CONFD_DIR}:/etc/nginx/conf.d/:rw
+      - ${NGINX_BASIC_AUTH_DIR}:/etc/nginx/auth/:rw
       - ${NGINX_CONF_FILE}:/etc/nginx/nginx.conf:ro
       - ${NGINX_FASTCGI_PHP_CONF}:/etc/nginx/fastcgi-php.conf:ro
       - ${NGINX_FASTCGI_PARAMS}:/etc/nginx/fastcgi_params:ro
