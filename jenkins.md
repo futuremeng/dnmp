@@ -1,7 +1,7 @@
 <!--
  * @Date: 2021-12-27 16:20:40
  * @LastEditors: Future Meng
- * @LastEditTime: 2021-12-28 13:29:34
+ * @LastEditTime: 2021-12-28 14:00:05
 -->
 # 建议安装插件
 1. jenkins安装时选择默认推荐的插件
@@ -26,3 +26,10 @@ OpenJDK 64-Bit Server VM Temurin-11.0.13+8 (build 11.0.13+8, mixed mode)
 1. 设置Name：maven
 2. 勾选自动安装，默认可以选择从Apache安装3.8.4，保存 
 3. 安装插件：Maven Integration
+
+### Nodejs
+新增Nodejs
+1. 安装插件Nodejs
+2. 在全局工具配置中添加Nodejs，设置别名，如nodejs17.3.0，自动安装
+3. 在Job Item中勾选Provide Node & npm bin/ folder to PATH，Cache location选择Local to the executor，可以将执行位置放到当前项目下
+4. 在Job Item中设置构建shell，如npm install、npm run build等
