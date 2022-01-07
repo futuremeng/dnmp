@@ -1,12 +1,12 @@
 <!--
  * @Date: 2021-12-27 16:20:40
  * @LastEditors: Future Meng
- * @LastEditTime: 2021-12-28 14:00:05
+ * @LastEditTime: 2022-01-07 10:40:22
 -->
 # 建议安装插件
 1. jenkins安装时选择默认推荐的插件
 2. dingtalk，用来给钉钉群机器人发消息
-3. changelog-environment.hpi，用来在shell中获取git更新记录
+3. changelog-environment.hpi，用来在shell中获取git更新记录,可以通过插件管理中的高级-上传插件方式安装，文件在./services/jenkins中可以获得
 4. Generic Webhook Trigger，用来接收针对某个项目的触发请求
 
 ## 全局工具配置 configureTools
