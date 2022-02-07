@@ -1,6 +1,11 @@
 DNMP（Docker + Nginx + MySQL + PHP7/5 + Redis）是一款全功能的**LNMP一键安装程序**。
 
-> 使用前最好提前阅读一遍[目录](#目录)，以便快速上手，遇到问题也能及时排除。交流QQ一群：**572041090（已满）**，二群：**300723526**。
+> 使用前最好提前阅读一遍[目录](#目录)，以便快速上手，遇到问题也能及时排除。
+
+QQ交流群：
+- 1群：**572041090**（已满）
+- 2群：**300723526**（快满了）
+- 3群：**142227642**（有位）
 
 **[[ENGLISH]](README-en.md)** -
 [**[GitHub地址]**](https://github.com/yeszao/dnmp) -
@@ -89,7 +94,7 @@ DNMP项目特点：
     ```
     $ git clone https://github.com/yeszao/dnmp.git
     ```
-3. 如果不是`root`用户，还需将当前用户加入`docker`用户组：
+3. 如果主机是 Linux系统，且当前用户不是`root`用户，还需将当前用户加入`docker`用户组：
     ```
     $ sudo gpasswd -a ${USER} docker
     ```
