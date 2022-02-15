@@ -461,6 +461,15 @@ services:
     networks:
       - default
 
+  # https://gitee.com/cdtrh_group/database-dictionary
+  database-dictionary:
+    image: 251878350/database-dictionary:${DICTIONARY_VERSION}
+    container_name: database-dictionary
+    ports:
+      - "${DICTIONARY_HTTP_PORT}:9998"
+    networks:
+      - default
+
 networks:
   default:
     driver: bridge
