@@ -404,8 +404,10 @@ services:
       - "${MINIO_CONSOLE_PORT}:${MINIO_CONSOLE_PORT}"
     command: server /data --console-address ":${MINIO_CONSOLE_PORT}" #指定容器中的目录 /data
     environment:
-      MINIO_ROOT_USER: ${MINIO_ROOT_USER}     #管理后台用户名
-      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD} #管理后台密码，最小8个字符
+      # MINIO_ROOT_USER: ${MINIO_ROOT_USER}     #管理后台用户名,旧的配置
+      # MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD} #管理后台密码，最小8个字符
+      MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY}
+      MINIO_SECRET_KEY: ${MINIO_SECRET_KEY} 
     volumes:
       - ${MINIO_DATA_DIR}:/data:rw              #映射当前目录下的data目录至容器内/data目录
       - ${MINIO_CONF_DIR}:/root/.minio/     #映射配置目录
@@ -467,6 +469,7 @@ services:
     container_name: database-dictionary
     ports:
       - "${DICTIONARY_HTTP_PORT}:9998"
+    restart: always
     networks:
       - default
 
