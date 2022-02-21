@@ -451,6 +451,15 @@ services:
     networks:
       - default
 
+  node-exporter:
+    image: prom/node-exporter:latest
+    container_name: node-exporter
+    ports:
+      - "${NODE_EXPORTER_HTTP_PORT}:9100"
+    restart: always
+    networks:
+      - default
+
   grafana:
     image: grafana/grafana
     container_name: grafana
