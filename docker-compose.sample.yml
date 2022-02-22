@@ -414,6 +414,18 @@ services:
     networks:
       - default
 
+# imageproxy: 
+#   image: willnorris/imageproxy
+#   container_name: imageproxy
+#   command: -baseURL http://minio:9000/ -addr 0.0.0.0:8080 -cache s3://fake-region/${MINIO_BUCKET_IMAGE_CACHE}?endpoint=minio:9000&disableSSL=1&s3ForcePathStyle=1
+#   environment:
+#     AWS_ACCESS_KEY_ID: ${MINIO_ACCESS_KEY}
+#     AWS_SECRET_KEY: ${MINIO_SECRET_KEY} 
+#   ports: 
+#     - "${MINIO_IMAGE_PROXY_PORT}:8080"
+#   networks:
+#     - default
+
   jenkins:
     image: jenkins/jenkins:${JENKINS_VERSION}
     container_name: jenkins
