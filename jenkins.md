@@ -33,3 +33,18 @@ OpenJDK 64-Bit Server VM Temurin-11.0.13+8 (build 11.0.13+8, mixed mode)
 2. 在全局工具配置中添加Nodejs，设置别名，如nodejs17.3.0，自动安装
 3. 在Job Item中勾选Provide Node & npm bin/ folder to PATH，Cache location选择Local to the executor，可以将执行位置放到当前项目下
 4. 在Job Item中设置构建shell，如npm install、npm run build等
+
+### 内存不足
+在docker-compose的jenkins中增加如下配置：
+
+deploy:
+  resources:
+    limits:
+      memory: 2G
+    reservations:
+      memory: 200M
+
+并使用docker-compose --compatibility up -d启动
+使用
+```docker stats```
+确认内存占用情况
