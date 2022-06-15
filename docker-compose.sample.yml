@@ -167,6 +167,27 @@ services:
 #      TZ: "$TZ"
 
 
+    #服务名称
+  # sqlserver:
+  #   #容器名称
+  #   container_name: sqlserver
+  #   #镜像名称
+  #   image: mcr.microsoft.com/mssql/server:2022-latest
+  #   #端口映射
+  #   ports:
+  #     - 1433:1433
+  #   #挂载
+  #   volumes:
+  #     - ${DATA_DIR}/sqlserver:/var/opt/mssql/data
+  #   #环境变量
+  #   environment:
+  #     - ACCEPT_EULA=Y
+  #     #SA用户密码长度必须至少为 8 个字符，并包含以下四组中的三组字符：大写字母、小写字母、10 位基数和符号
+  #     - SA_PASSWORD=MSSql123456789
+  #   networks:
+  #     - default
+
+
   # matomo:
   #   restart: always
   #   image: matomo:latest
