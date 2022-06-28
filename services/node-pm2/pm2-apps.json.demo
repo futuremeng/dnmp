@@ -3,7 +3,9 @@
     [
       {
         "name": "demo-app",
-        "script": "./index.js",
+        "script": "index.js",
+        "cwd":"/usr/apps/demo-app",
+        "ignoreWatch" : ["[\\/\\\\]\\./", "node_modules"],
         "instances": 2,
         "env": { "production": true },
       },

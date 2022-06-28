@@ -8,9 +8,9 @@ ARG TZ
 ARG CONTAINER_PACKAGE_URL
 
 # 修改镜像源
-RUN if [ "${CONTAINER_PACKAGE_URL}" != "" ]; then \
-        sed -i "s/dl-cdn.alpinelinux.org/${CONTAINER_PACKAGE_URL}/g" /etc/apk/repositories; \
-    fi
+# RUN if [ "${CONTAINER_PACKAGE_URL}" != "" ]; then \
+#         sed -i "s/dl-cdn.alpinelinux.org/${CONTAINER_PACKAGE_URL}/g" /etc/apk/repositories; \
+#     fi
 
 
 # 解决could not get uid/gid问题，https://www.jianshu.com/p/d460ec3c693f
