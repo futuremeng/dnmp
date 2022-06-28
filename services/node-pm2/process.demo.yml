@@ -1,0 +1,11 @@
+{
+  "apps":
+    [
+      {
+        "name": "demo-app",
+        "script": "./index.js",
+        "instances": 2,
+        "env": { "production": true },
+      },
+    ],
+}
