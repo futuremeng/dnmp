@@ -1,13 +1,39 @@
 # node-pm2
 
 ## 部署
-
+```
 cp ./services/node-pm2/pm2-apps.json.demo ./services/node-pm2/pm2-apps.json
-
-
+```
 
 根据实际需要修改其中的app，可以在数据中增加多个app
 
+
+### 设置参数说明
+
+#### name
+app启动名称
+#### script
+脚本文件位置
+#### cwd
+脚本执行的相对路径
+#### -args
+脚本执行参数
+#### env
+脚本执行前设置的环境变量
+可以在项目中增加一个.env.pm2的配置文件，并在pm2-apps.json中的env中以一下方式指定。
+"NODE_ENV": "pm2"
+
+#### log_file
+保存log文件路径
+#### error_file
+error log文件路径
+#### out_file
+out log文件路径
+
+作者：rill_
+链接：https://www.jianshu.com/p/58197cb2de71
+来源：简书
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
 
 
 
