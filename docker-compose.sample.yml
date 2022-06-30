@@ -402,14 +402,14 @@ services:
   #     - NODE_ENV=production
   #   volumes:
   #     - ${SOURCE_DIR}:/usr/apps:rw
-  #     - ${NODE_PM2_CONF_FILE}:/usr/process.yml:ro
+  #     - ${NODE_PM2_CONF_FILE}:/usr/pm2-apps.json:ro
   #   expose:
   #     - "3000"
   #   stdin_open: true
   #   tty: true
   #   # 容器内使用pm2-runtime，而不是pm2，参考https://stackoverflow.com/questions/55936473/docker-exits-with-code-0-when-using-pm2-start
   #   # command: pm2-runtime start npm --name 'node-pm2' -- run start
-  #   command: pm2-runtime start /usr/process.yml
+  #   command: pm2-runtime start /usr/pm2-apps.json
   #   networks:
   #     - default
 
