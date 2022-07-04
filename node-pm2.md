@@ -47,3 +47,18 @@ $ docker exec -it <container-id> pm2 reload all	0sec downtime reload all applica
 
 
 docker exec -it node-pm2 pm2 monit
+
+通过docker-compose expose 3000到3999的端口
+在pm2-apps.json中app的port可以指定为3001到3999的端口
+则在nginx中可以配置代理到相应的应用的端口，如
+
+```
+location /api/ {
+        proxy_pass http://node-pm2:3001/;
+        # add_header Content-Security-Policy "script-src 'self' 'unsafe-inline' 'unsafe-eval'; object-src 'self'; style-src 'self' 'unsafe-inline';";
+        proxy_set_header Host            $host;
+        proxy_set_header X-Real-IP       $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+    }
+```

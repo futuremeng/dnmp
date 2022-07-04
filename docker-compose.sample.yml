@@ -404,7 +404,7 @@ services:
   #     - ${SOURCE_DIR}:/usr/apps:rw
   #     - ${NODE_PM2_CONF_FILE}:/usr/pm2-apps.json:ro
   #   expose:
-  #     - "3000"
+  #     - "3000-3999"
   #   stdin_open: true
   #   tty: true
   #   # 容器内使用pm2-runtime，而不是pm2，参考https://stackoverflow.com/questions/55936473/docker-exits-with-code-0-when-using-pm2-start
