@@ -62,3 +62,10 @@ location /api/ {
 
     }
 ```
+
+
+并使用
+```
+docker-compose --compatibility up -d node-pm2
+```
+启动

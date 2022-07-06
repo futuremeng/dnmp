@@ -44,7 +44,12 @@ deploy:
     reservations:
       memory: 200M
 
-并使用docker-compose --compatibility up -d启动
+并使用
+```
+docker-compose --compatibility up -d jenkins
+```
+启动
+
 使用
 ```docker stats```
 确认内存占用情况

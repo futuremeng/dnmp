@@ -409,7 +409,7 @@ services:
   #   tty: true
   #   # 容器内使用pm2-runtime，而不是pm2，参考https://stackoverflow.com/questions/55936473/docker-exits-with-code-0-when-using-pm2-start
   #   # command: pm2-runtime start npm --name 'node-pm2' -- run start
-  #   command: pm2-runtime start /usr/pm2-apps.json
+  #   command: pm2-runtime start /usr/pm2-apps.json --watch
   #   networks:
   #     - default
 
