@@ -533,21 +533,6 @@ docker0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
 MIT
 
 
-Nginx中设置基础认证，需要用户名密码才能访问
-```
-cd services/nginx/auth
-echo  -n 'username:' >> .htpasswd
-openssl passwd -apr1 password >> .htpasswd
-```
-其中username就是用户名，password就是密码，请替换为自己设定的信息
-.htpasswd是生成的密钥文件，建议命名为项目或相应目录的名称，例如.google.htpasswd
-
-在conf.d的conf文件中，添加设置启用：
-location /google {
-    auth_basic "authentication";
-    auth_basic_user_file /etc/nginx/auth/.google.htpasswd;
-}
-
 
 ### prometheus
 
