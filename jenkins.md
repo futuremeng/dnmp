@@ -53,3 +53,50 @@ docker-compose --compatibility up -d jenkins
 使用
 ```docker stats```
 确认内存占用情况
+
+## 二级目录部署
+
+JENKINS_OPTS: '--prefix=/jenkins'
+
+```
+
+
+  jenkins:
+    image: jenkins/jenkins:${JENKINS_VERSION}
+    container_name: jenkins
+    volumes:
+        - ${JENKINS_HOME_DIR}:/var/jenkins_home
+        - ${JENKINS_CERTS_DIR}:/certs/client
+        - ${SOURCE_DIR}:/www/:rw
+        - ${TOMCAT_WEBAPPS_DIR}:/webapps/:rw
+        - /var/run/docker.sock:/var/run/docker.sock
+        - /usr/bin/docker:/usr/bin/docker
+        - /usr/lib/x86_64-linux-gnu/libltdl.so.7:/usr/lib/x86_64-linux-gnu/libltdl.so.7
+    ports:
+        - "${JENKINS_HTTP_PORT}:8080"
+        - 50000:50000
+    privileged: true
+    user: root
+    restart: always
+    environment:
+        TZ: "$TZ"
+        JAVA_OPTS: '-Djava.util.logging.config.file=/var/jenkins_home/log.properties'
+        JENKINS_OPTS: '--prefix=/jenkins'
+    networks:
+      - default
+
+```
+
+## nginx
+
+```
+    location /jenkins/ {
+        proxy_pass http://jenkins:8080/jenkins/;
+        # add_header Content-Security-Policy "script-src 'self' 'unsafe-inline' 'unsafe-eval'; object-src 'self'; style-src 'self' 'unsafe-inline';";
+        proxy_set_header Host            $host;
+        proxy_set_header X-Real-IP       $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+
+    }
+```
