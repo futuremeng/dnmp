@@ -26,6 +26,8 @@ location /google {
 #### 构建
 在构建端的jenkins中
 
+job的shell中：
+```
 rm -f api.tar.gz
 
 tar -czvf api.tar.gz .[!.]* * --exclude=.git --exclude=api.tar.gz
@@ -38,9 +40,18 @@ curl 'https://oapi.dingtalk.com/robot/send?access_token=' \
 
 curl 'http://client/jenkins/generic-webhook-trigger/invoke?token=api'
 
-#### 部署
-在部署端的jenkins中
+```
 
+#### 部署
+在部署端的jenkins中,
+docker exec -it jenkins /bin/bash
+apt update
+apt install wget
+
+
+job的shell中：
+
+```
 wget --http-user=USRER --http-passwd=PASSWORD https://domain/release/client/api.tar.gz
 mkdir client
 tar -xzf ./api.tar.gz -C ./client
@@ -49,3 +60,4 @@ cp -rf ./client/. /www/client
 curl 'https://oapi.dingtalk.com/robot/send?access_token=' \
    -H 'Content-Type: application/json' \
    -d "{'msgtype': 'text', 'text': {'content': \"update  https:\/\/client\/api\/doc\"}}"
+```
