@@ -562,6 +562,21 @@ services:
     networks:
       - default
 
+  
+  solr:
+    image: solr:${SOLR_VERSION}
+    restart: always
+    container_name: solr
+    command:
+      - solr-precreate
+      - gettingstarted
+    volumes:
+      - ${SOLR_DIR}:/var/solr
+    ports:
+      - "${SOLR_HTTP_PORT}:8983"
+    networks:
+      - default
+
 
   nacos:
     image: nacos/nacos-server:${NACOS_VERSION}
@@ -587,6 +602,8 @@ services:
       - ./services/nacos/conf/:/home/nacos/conf
     ports:
       - "${NACOS_HTTP_PORT}:8848"
+    networks:
+      - default
 
 networks:
   default:
