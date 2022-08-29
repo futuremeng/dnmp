@@ -62,7 +62,6 @@ DNMP项目特点：
     - [8.5 容器内的php如何连接宿主机MySQL](#85-容器内的php如何连接宿主机mysql)
     - [8.6 SQLSTATE[HY000] [1130] Host '172.19.0.2' is not allowed to connect to this MySQL server](#86-sqlstatehy000-1130-host-1721902-is-not-allowed-to-connect-to-this-mysql-server)
   - [License](#license)
-    - [prometheus](#prometheus)
 
 
 ## 1.目录结构
@@ -532,21 +531,3 @@ docker0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
 ## License
 MIT
 
-
-
-### prometheus
-
-https://www.cnblogs.com/sonyy/p/13157153.html
-
-./services/prometheus/prometheus.yml
-
-global:
-  scrape_interval:     15s 
-  evaluation_interval: 15s
-scrape_configs:
-  - job_name: 'prometheus'
-    static_configs:
-    - targets: ['localhost:9090']
-  - job_name: 'server'
-    static_configs:
-    - targets: ['node-exporter:9100']
