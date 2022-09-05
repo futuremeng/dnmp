@@ -100,3 +100,10 @@ JENKINS_OPTS: '--prefix=/jenkins'
 
     }
 ```
+
+
+## 安装常用插件
+
+Git Parameter
+Generic Webhook Trigger
+Nodejs
