@@ -117,8 +117,10 @@ changelog-environment.hpi
 在job中，勾选Add Changelog Information to Environment
 并设置：
 
-  Entry Format
-  %3$s(at %4$s via %1$s)\n
+Entry Format
+%3$s(at %4$s via %1$s)\n
 
-  Date Format
-  yyyy-MM-dd HH:mm:ss
+Date Format
+yyyy-MM-dd HH:mm:ss
+
+在shell中通过${SCM_CHANGELOG}调用
