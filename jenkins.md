@@ -100,3 +100,27 @@ JENKINS_OPTS: '--prefix=/jenkins'
 
     }
 ```
+
+
+## 安装常用插件
+
+Git Parameter
+Generic Webhook Trigger
+Nodejs
+
+### changelog
+在./services/jenkins中获取插件文件
+changelog-environment.hpi
+
+在jenkins插件管理的高级页签，通过上传来安装
+
+在job中，勾选Add Changelog Information to Environment
+并设置：
+
+Entry Format
+%3$s(at %4$s via %1$s)\n
+
+Date Format
+yyyy-MM-dd HH:mm:ss
+
+在shell中通过${SCM_CHANGELOG}调用
