@@ -553,57 +553,57 @@ services:
   #     - default
 
   # https://gitee.com/cdtrh_group/database-dictionary
-  database-dictionary:
-    image: 251878350/database-dictionary:${DICTIONARY_VERSION}
-    container_name: database-dictionary
-    ports:
-      - "${DICTIONARY_HTTP_PORT}:9998"
-    restart: always
-    networks:
-      - default
+  # database-dictionary:
+  #   image: 251878350/database-dictionary:${DICTIONARY_VERSION}
+  #   container_name: database-dictionary
+  #   ports:
+  #     - "${DICTIONARY_HTTP_PORT}:9998"
+  #   restart: always
+  #   networks:
+  #     - default
 
   
-  solr:
-    image: solr:${SOLR_VERSION}
-    restart: always
-    container_name: solr
-    command:
-      - solr-precreate
-      - gettingstarted
-    volumes:
-      - ${SOLR_DIR}:/var/solr
-    ports:
-      - "${SOLR_HTTP_PORT}:8983"
-    networks:
-      - default
+  # solr:
+  #   image: solr:${SOLR_VERSION}
+  #   restart: always
+  #   container_name: solr
+  #   command:
+  #     - solr-precreate
+  #     - gettingstarted
+  #   volumes:
+  #     - ${SOLR_DIR}:/var/solr
+  #   ports:
+  #     - "${SOLR_HTTP_PORT}:8983"
+  #   networks:
+  #     - default
 
 
-  nacos:
-    image: nacos/nacos-server:${NACOS_VERSION}
-    container_name: nacos
-    restart: always
-    depends_on:
-      - mysql
-    environment:
-      PREFER_HOST_MODE: hostname #如果支持主机名可以使用hostname,否则使用ip，默认也是ip
-      SPRING_DATASOURCE_PLATFORM: mysql #数据源平台 仅支持mysql或不保存empty
-      MODE: standalone
-      MYSQL_SERVICE_HOST: mysql
-      MYSQL_SERVICE_DB_NAME: nacos
-      MYSQL_SERVICE_PORT: 3306
-      MYSQL_SERVICE_USER: root
-      MYSQL_SERVICE_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      NACOS_APPLICATION_PORT: 3306
-      JVM_XMS: 512m
-      JVM_MMS: 320m
-    volumes:
-      - ./logs/nacos/standalone-logs/:/home/nacos/logs
-      - ./services/nacos/plugins/:/home/nacos/plugins
-      - ./services/nacos/conf/:/home/nacos/conf
-    ports:
-      - "${NACOS_HTTP_PORT}:8848"
-    networks:
-      - default
+  # nacos:
+  #   image: nacos/nacos-server:${NACOS_VERSION}
+  #   container_name: nacos
+  #   restart: always
+  #   depends_on:
+  #     - mysql
+  #   environment:
+  #     PREFER_HOST_MODE: hostname #如果支持主机名可以使用hostname,否则使用ip，默认也是ip
+  #     SPRING_DATASOURCE_PLATFORM: mysql #数据源平台 仅支持mysql或不保存empty
+  #     MODE: standalone
+  #     MYSQL_SERVICE_HOST: mysql
+  #     MYSQL_SERVICE_DB_NAME: nacos
+  #     MYSQL_SERVICE_PORT: 3306
+  #     MYSQL_SERVICE_USER: root
+  #     MYSQL_SERVICE_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+  #     NACOS_APPLICATION_PORT: 3306
+  #     JVM_XMS: 512m
+  #     JVM_MMS: 320m
+  #   volumes:
+  #     - ./logs/nacos/standalone-logs/:/home/nacos/logs
+  #     - ./services/nacos/plugins/:/home/nacos/plugins
+  #     - ./services/nacos/conf/:/home/nacos/conf
+  #   ports:
+  #     - "${NACOS_HTTP_PORT}:8848"
+  #   networks:
+  #     - default
 
 networks:
   default:
