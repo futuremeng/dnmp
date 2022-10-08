@@ -33,6 +33,7 @@ OpenJDK 64-Bit Server VM Temurin-11.0.13+8 (build 11.0.13+8, mixed mode)
 2. 在全局工具配置中添加Nodejs，设置别名，如nodejs17.3.0，自动安装
 3. 在Job Item中勾选Provide Node & npm bin/ folder to PATH，Cache location选择Local to the executor，可以将执行位置放到当前项目下
 4. 在Job Item中设置构建shell，如npm install、npm run build等
+5. 默认安装的npm版本可能较低导致构建失败，需要在shell中执行npm install -g npm
 
 ### 内存不足
 在docker-compose的jenkins中增加如下配置：
@@ -124,3 +125,23 @@ Date Format
 yyyy-MM-dd HH:mm:ss
 
 在shell中通过${SCM_CHANGELOG}调用
+
+
+## shell中调用composer
+
+在shell中使用：
+```
+    tty=
+    tty -s && tty=--tty
+    docker run \
+        $tty \
+        --interactive \
+        --rm \
+        --user www-data:www-data \
+        --volume /dnmp/data/composer:/tmp/composer \
+        --volume /dnmp/www:/app \
+        --workdir /app \
+        dnmp_php composer install
+```
+
+参考：http://futuremeng.com/?p=5763
