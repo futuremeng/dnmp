@@ -618,6 +618,17 @@ services:
     volumes: 
       - "${DATA_DIR}/neo4j:/var/lib/neo4j/data" 
       - "${NEO4J_LOG_DIR}:/var/lib/neo4j/logs"
+    networks:
+      - default
+
+  asr:
+    image: onerahmet/openai-whisper-asr-webservice:latest
+    container_name: asr
+    environment: 
+      - ASR_MODEL=base
+    networks:
+      - default
+    
 
 networks:
   default:
