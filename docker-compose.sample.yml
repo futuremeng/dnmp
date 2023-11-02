@@ -58,7 +58,7 @@ services:
 #    build:
 #      context: ./services/php80
 #      args:
-#        PHP_VERSION: php:${PHP80_VERSION}-fpm-alpine3.13
+#        PHP_VERSION: php:${PHP80_VERSION}-fpm-alpine
 #        CONTAINER_PACKAGE_URL: ${CONTAINER_PACKAGE_URL}
 #        PHP_EXTENSIONS: ${PHP80_EXTENSIONS}
 #        TZ: "$TZ"
@@ -227,11 +227,24 @@ services:
 #    networks:
 #      - default
 
+  # redis:
+  #   image: redis:${REDIS_VERSION}
+  #   container_name: redis
+  #   ports:
+  #     - "${REDIS_HOST_PORT}:6379"
+  #   volumes:
+  #     - ${REDIS_CONF_FILE}:/etc/redis.conf:ro
+  #     - ${DATA_DIR}/redis:/data/:rw
+  #   restart: always
+  #   entrypoint: ["redis-server", "/etc/redis.conf"]
+  #   environment:
+  #     TZ: "$TZ"
+  #   networks:
+  #     - default
+
   redis:
-    image: redis:${REDIS_VERSION}
+    image: redis:${REDIS_VERSION}-alpine
     container_name: redis
-    ports:
-      - "${REDIS_HOST_PORT}:6379"
     volumes:
       - ${REDIS_CONF_FILE}:/etc/redis.conf:ro
       - ${DATA_DIR}/redis:/data/:rw
