@@ -60,14 +60,13 @@ isPhpVersionGreaterOrEqual()
 installExtensionFromTgz()
 {
     tgzName=$1
-    para1=
+    result=""
     extensionName="${tgzName%%-*}"
-    if [  $2 ]; then  
-        para1=$2
-    fi  
+    shift 1
+    result=$@
     mkdir ${extensionName}
     tar -xf ${tgzName}.tgz -C ${extensionName} --strip-components=1
-    ( cd ${extensionName} && phpize && ./configure ${para1} && make ${MC} && make install )
+    ( cd ${extensionName} && phpize && ./configure ${result} && make ${MC} && make install )
 
     docker-php-ext-enable ${extensionName}
 }
@@ -349,7 +348,7 @@ if [[ -z "${EXTENSIONS##*,imagick,*}" ]]; then
     echo "---------- Install imagick ----------"
 	apk add --no-cache file-dev
 	apk add --no-cache imagemagick-dev
-    printf "\n" | pecl install imagick-3.4.4
+    printf "\n" | pecl install imagick
     docker-php-ext-enable imagick
 fi
 
@@ -526,7 +525,7 @@ if [[ -z "${EXTENSIONS##*,amqp,*}" ]]; then
     && printf '\n' | pecl install amqp \
     && docker-php-ext-enable amqp \
     && apk del .phpize-deps-configure
-    
+
 fi
 
 if [[ -z "${EXTENSIONS##*,redis,*}" ]]; then
@@ -543,7 +542,7 @@ fi
 if [[ -z "${EXTENSIONS##*,memcached,*}" ]]; then
     echo "---------- Install memcached ----------"
     apk add --no-cache libmemcached-dev zlib-dev
-    pecl install memcached-3.2.3
+    pecl install memcached-3.2.0
     docker-php-ext-enable memcached
 fi
 
@@ -569,12 +568,18 @@ if [[ -z "${EXTENSIONS##*,event,*}" ]]; then
     fi
 
     echo "---------- Install event again ----------"
-    installExtensionFromTgz event-3.0.5  "--ini-name event.ini"
+    mkdir event
+    tar -xf event-3.0.8.tgz -C event --strip-components=1
+    cd event && phpize && ./configure && make  && make install
+
+    docker-php-ext-enable --ini-name event.ini event
 fi
 
 if [[ -z "${EXTENSIONS##*,mongodb,*}" ]]; then
     echo "---------- Install mongodb ----------"
-    pecl install mongodb
+    apk add --no-cache openssl-dev
+    installExtensionFromTgz mongodb-1.15.2
+    docker-php-ext-configure mongodb --with-mongodb-ssl=openssl
     docker-php-ext-enable mongodb
 fi
 
@@ -586,10 +591,11 @@ fi
 
 
 if [[ -z "${EXTENSIONS##*,swoole,*}" ]]; then
-    echo "---------- Install swoole ----------"    
+    echo "---------- Install swoole ----------"
+    apk add --no-cache libstdc++
     isPhpVersionGreaterOrEqual 8 0
     if [[ "$?" = "1" ]]; then
-        installExtensionFromTgz swoole-5.0.2 --enable-openssl
+        installExtensionFromTgz swoole-5.0.2 --enable-openssl --enable-http2
     fi
 fi
 
