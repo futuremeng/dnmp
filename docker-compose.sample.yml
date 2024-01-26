@@ -35,6 +35,7 @@ services:
       args:
         PHP_VERSION: php:${PHP_VERSION}-fpm-alpine
         CONTAINER_PACKAGE_URL: ${CONTAINER_PACKAGE_URL}
+        COMPOSER_URL: ${COMPOSER_URL}
         PHP_EXTENSIONS: ${PHP_EXTENSIONS}
         TZ: "$TZ"
     container_name: php
@@ -60,6 +61,7 @@ services:
 #      args:
 #        PHP_VERSION: php:${PHP80_VERSION}-fpm-alpine
 #        CONTAINER_PACKAGE_URL: ${CONTAINER_PACKAGE_URL}
+#        COMPOSER_URL: ${COMPOSER_URL}
 #        PHP_EXTENSIONS: ${PHP80_EXTENSIONS}
 #        TZ: "$TZ"
 #    container_name: php80
