@@ -155,22 +155,22 @@ services:
       MYSQL_ROOT_HOST: "${MYSQL_ROOT_HOST}"
       TZ: "$TZ"
 
-  mysql5:
-    image: mysql:${MYSQL5_VERSION}
-    container_name: mysql5
-    ports:
-      - "${MYSQL5_HOST_PORT}:3306"
-    volumes:
-      - ${MYSQL5_CONF_FILE}:/etc/mysql/conf.d/mysql.cnf:ro
-      - ${DATA_DIR}/mysql5:/var/lib/mysql/:rw
-      - ${MYSQL5_LOG_DIR}:/var/log/mysql/:rw
-    restart: always
-    networks:
-      - default
-    environment:
-      MYSQL_ROOT_PASSWORD: "${MYSQL5_ROOT_PASSWORD}"
-      MYSQL_ROOT_HOST: "${MYSQL5_ROOT_HOST}"
-      TZ: "$TZ"
+  # mysql5:
+  #   image: mysql:${MYSQL5_VERSION}
+  #   container_name: mysql5
+  #   ports:
+  #     - "${MYSQL5_HOST_PORT}:3306"
+  #   volumes:
+  #     - ${MYSQL5_CONF_FILE}:/etc/mysql/conf.d/mysql.cnf:ro
+  #     - ${DATA_DIR}/mysql5:/var/lib/mysql/:rw
+  #     - ${MYSQL5_LOG_DIR}:/var/log/mysql/:rw
+  #   restart: always
+  #   networks:
+  #     - default
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: "${MYSQL5_ROOT_PASSWORD}"
+  #     MYSQL_ROOT_HOST: "${MYSQL5_ROOT_HOST}"
+  #     TZ: "$TZ"
 
 
     #服务名称
@@ -624,29 +624,29 @@ services:
   #   networks:
   #     - default
 
-  neo4j: 
-    image: neo4j:${NEO4J_VERSION}
-    container_name: neo4j 
-    privileged: true 
-    restart: always 
-    environment: 
-      - NEO4J_AUTH=${NEO4J_USER}/${NEO4J_PASSWORD} 
-    ports: 
-      - "${NEO4J_HTTP_PORT}:7474" 
-      - "${NEO4J_BOLT_PORT}:7687" 
-    volumes: 
-      - "${DATA_DIR}/neo4j:/var/lib/neo4j/data" 
-      - "${NEO4J_LOG_DIR}:/var/lib/neo4j/logs"
-    networks:
-      - default
+  # neo4j: 
+  #   image: neo4j:${NEO4J_VERSION}
+  #   container_name: neo4j 
+  #   privileged: true 
+  #   restart: always 
+  #   environment: 
+  #     - NEO4J_AUTH=${NEO4J_USER}/${NEO4J_PASSWORD} 
+  #   ports: 
+  #     - "${NEO4J_HTTP_PORT}:7474" 
+  #     - "${NEO4J_BOLT_PORT}:7687" 
+  #   volumes: 
+  #     - "${DATA_DIR}/neo4j:/var/lib/neo4j/data" 
+  #     - "${NEO4J_LOG_DIR}:/var/lib/neo4j/logs"
+  #   networks:
+  #     - default
 
-  asr:
-    image: onerahmet/openai-whisper-asr-webservice:latest
-    container_name: asr
-    environment: 
-      - ASR_MODEL=base
-    networks:
-      - default
+  # asr:
+  #   image: onerahmet/openai-whisper-asr-webservice:latest
+  #   container_name: asr
+  #   environment: 
+  #     - ASR_MODEL=base
+  #   networks:
+  #     - default
     
 
 networks:
