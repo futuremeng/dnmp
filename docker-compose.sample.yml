@@ -20,6 +20,8 @@ services:
       - ${NGINX_FASTCGI_PHP_CONF}:/etc/nginx/fastcgi-php.conf:ro
       - ${NGINX_FASTCGI_PARAMS}:/etc/nginx/fastcgi_params:ro
       - ${NGINX_LOG_DIR}:/var/log/nginx/:rw
+      # - ./data/certbot/conf:/etc/letsencrypt
+      # - ./data/certbot/www:/var/www/certbot
     environment:
       TZ: "$TZ"
     restart: always
@@ -28,6 +30,14 @@ services:
       # 可以把-default 改成下列配置，以固定容器IP
       #default:
       #  ipv4_address: 10.0.0.10
+    
+  # certbot:
+  #   image: certbot/certbot
+  #   volumes:
+  #     - ./data/certbot/conf:/etc/letsencrypt
+  #     - ./data/certbot/www:/var/www/certbot
+  #   networks:
+  #     - default
 
   php:
     build:
@@ -647,6 +657,8 @@ services:
   #     - ASR_MODEL=base
   #   networks:
   #     - default
+
+
     
 
 networks:
