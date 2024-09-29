@@ -3,7 +3,7 @@
  # @Author: be_loving@163.com 
  # @Date: 2024-09-11 03:32:36
  # @LastEditors: be_loving@163.com 
- # @LastEditTime: 2024-09-28 12:10:30
+ # @LastEditTime: 2024-09-29 08:40:29
  # @FilePath: /dnmp/preinstall-aarch64.sh
  # @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 ### 
@@ -19,6 +19,23 @@ sed -i 's/$releasever/$centos_version/g' /etc/yum.repos.d/CentOS-Base.repo
 # 刷新缓存
 yum makecache
 yum install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin --allowerasing
+
+cat <<EOF > /etc/docker/daemon.json
+{
+  "registry-mirrors": [
+    "https://quay.mirrors.ustc.edu.cn",
+    "https://registry.docker-cn.com",
+    "https://docker.m.daocloud.io",
+    "https://hub-mirror.c.163.com/",
+    "https://dockerhub.icu"
+    ],
+  "log-driver": "json-file",
+  "log-opts": {
+    "max-size": "1024m",
+    "max-file": "10"
+  }
+}
+EOF
 
 systemctl start docker
 systemctl enable docker
