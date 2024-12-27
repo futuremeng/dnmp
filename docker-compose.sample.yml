@@ -678,6 +678,67 @@ services:
   #   networks:
   #     - default
 
+  # one-hub:
+  #   image: martialbe/one-api:latest
+  #   container_name: one-hub
+  #   restart: always
+  #   ports:
+  #     - "${ONE_HUB_PORT}:3000"
+  #   volumes:
+  #     - ${DATA_DIR}/one-hub:/data
+  #     - ${LOGS_DIR}/one-hub:/app/logs
+  #   environment:
+  #     - SQL_DSN=${ONE_HUB_MYSQL_USER}:${ONE_HUB_MYSQL_PASSWORD}@tcp(mysql:3306)/${ONE_HUB_MYSQL_DATABASE} # 修改此行，或注释掉以使用 SQLite 作为数据库
+  #     - REDIS_CONN_STRING=redis://redis
+  #     - SESSION_SECRET=${ONE_HUB_SESSION_SECRET} # 修改为随机字符串
+  #     - USER_TOKEN_SECRET=${ONE_HUB_USER_TOKEN_SECRET} # 修改为随机字符串,32位以上
+  #     - TZ=Asia/Shanghai
+  #     # - HASHIDS_SALT=random_string # 可空，建议设置，字符串元素不能重复
+  #   #      - NODE_TYPE=slave  # 多机部署时从节点取消注释该行
+  #   #      - SYNC_FREQUENCY=60  # 需要定期从数据库加载数据时取消注释该行
+  #   #      - FRONTEND_BASE_URL=https://openai.justsong.cn  # 多机部署时从节点取消注释该行
+  #   depends_on:
+  #     - redis
+  #     - mysql
+  #   healthcheck:
+  #     test:
+  #       [
+  #         "CMD-SHELL",
+  #         "wget -q -O - http://localhost:${ONE_HUB_PORT}/api/status | grep -o '\"success\":\\s*true' | awk -F: '{print $2}'",
+  #       ]
+  #     interval: 30s
+  #     timeout: 10s
+  #     retries: 3
+  #   networks:
+  #     - default
+
+  # infinity:
+  #   container_name: infinity
+  #   image: infiniflow/infinity:v0.5.2
+  #   volumes:
+  #     - ${DATA_DIR}/infinity/infinity_data:/var/infinity
+  #     - ${SERVICES_DIR}/infinity/infinity_conf.toml:/infinity_conf.toml
+  #   command: ["-f", "/infinity_conf.toml"]
+  #   ports:
+  #     - ${INFINITY_THRIFT_PORT}:23817
+  #     - ${INFINITY_HTTP_PORT}:23820
+  #     - ${INFINITY_PSQL_PORT}:5432
+  #   env_file: .env
+  #   environment:
+  #     - TZ=${TIMEZONE}
+  #   mem_limit: ${MEM_LIMIT}
+  #   ulimits:
+  #     nofile:
+  #       soft: 500000
+  #       hard: 500000
+  #   networks:
+  #     - default
+  #   healthcheck:
+  #     test: ["CMD", "curl", "http://localhost:23820/admin/node/current"]
+  #     interval: 10s
+  #     timeout: 10s
+  #     retries: 120
+  #   restart: on-failure
 
     
 
