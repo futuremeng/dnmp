@@ -1,0 +1,22 @@
+# 全局选项
+{
+    # 全局使用alidns
+    acme_dns alidns {
+        access_key_id idiidiidiidid
+        access_key_secret ststtsssttssttt
+    }
+
+  # 储存目录默认映射
+  storage file_system /data/cert
+  # 注意storage目录文件默认权限不允许其他人访问
+  # 如果需要被其他程序访问，可以自己手动chmod -R
+
+  # 关闭http自动重定向，可避免出现80端口占用问题（可手动加重定向配置）
+  auto_https disable_redirects
+}
+
+https://helloworld.com {
+    reverse_proxy http://IP:8088
+}
+
+
