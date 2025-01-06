@@ -1,5 +1,29 @@
 version: "3"
 services:
+
+  # 这个是服务端，只在服务器端部署，接进来的端口可以直接在nginx或者caddy中通过容器名加端口就可以访问或者设置代理
+  frps:
+    restart: unless-stopped
+    image: snowdreamtech/frps
+    container_name: frps
+    volumes:
+      - ./services/frps/frps.toml:/etc/frp/frps.toml
+    ports:
+      - 7000:7000
+      - 7500:7500
+    networks:
+      - default # 默认为 service_name + network_name = frps_default
+
+  # 这个是客户端，在客户端部署，为的是把客户端的某个端口发布到前面的frps上去
+  frpc:
+    restart: unless-stopped
+    image: snowdreamtech/frpc
+    container_name: frpc
+    volumes:
+      - ./services/frpc/frpc.toml:/etc/frp/frpc.toml
+    # ports:
+    #   - 7400:7400
+
   nginx:
     build:
       context: ./services/nginx
@@ -33,7 +57,7 @@ services:
   #   restart: unless-stopped
   #   environment:
   #     - TZ=Asia/Shanghai
-  #     - DNS=223.5.5.5,8.8.8.8
+  #     - DNS=223.5.5.5,8.8.8.8,127.0.0.11 # 默认可以不加这个，加了有可能造成无法访问同一个容器网络的其他容器，如果发现有这个情况，看一下容器内的dns地址是什么，加在后面，比如127.0.0.11
   #   volumes:
   #     - ./services/caddy/config:/config
   #     - ./data/caddy:/data

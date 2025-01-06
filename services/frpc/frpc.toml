@@ -1,0 +1,17 @@
+# vim frpc/frpc.toml
+serverAddr  = "服务器 IP 或域名"
+serverPort  = 7000
+log.to = "console"               
+auth.token = "密钥"
+#frpc 服务仪表板配置 可以不要
+webServer.addr = "0.0.0.0"
+webServer.port = 7400
+webServer.user = "admin"
+webServer.password = "admin"
+
+[[proxies]]
+name = "rdp"
+type = "tcp"
+localIP  = "10.128.39.41"
+localPort  = 3389
+remotePort  = 3389

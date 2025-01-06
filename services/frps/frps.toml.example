@@ -1,0 +1,17 @@
+# vim frps/frps.toml
+bindPort = 7000 #{必选} 客户端与该端口建立连接      
+log.to = "console" #{可选}  日志配置， 通过打印的方式输出日志  
+vhostHTTPPort = 7100 #{可选} http 代理需要，当访问该端口时跳到对应本地 frpc 代理
+vhostHTTPSPort = 7200  #{可选} https 代理需要，当访问该端口时跳到对应本地 frpc 代理 
+transport.tcpMux = true #tcp 流多路复用（优化传输，需一致）
+
+#身份验证
+auth.method = "token"  #{可选}身份验证方式 
+auth.token = "secret-token" #token 设置密码，用于通过身份验证创建连接，一定要修改
+
+#frp 服务仪表板配置
+
+webServer.port = 7500  #{也可自行修改端口}      
+webServer.addr = "0.0.0.0" #公网 ip 或者域名  
+webServer.user = "admin" #登录用户名{可自行修改}    
+webServer.password = "secret-password" #登录密码{一定要自行修改}
