@@ -765,8 +765,8 @@ services:
   #     - ${INFINITY_PSQL_PORT}:5432
   #   env_file: .env
   #   environment:
-  #     - TZ=${TIMEZONE}
-  #   mem_limit: ${MEM_LIMIT}
+  #     - TZ: "$TZ"
+  #   mem_limit: ${INFINITY_MEM_LIMIT}
   #   ulimits:
   #     nofile:
   #       soft: 500000
