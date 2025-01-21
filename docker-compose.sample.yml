@@ -57,10 +57,11 @@ services:
   #   restart: unless-stopped
   #   environment:
   #     - TZ=Asia/Shanghai
-  #     - DNS=223.5.5.5,8.8.8.8,127.0.0.11 # 默认可以不加这个，加了有可能造成无法访问同一个容器网络的其他容器，如果发现有这个情况，看一下容器内的dns地址是什么，加在后面，比如127.0.0.11
   #   volumes:
   #     - ./services/caddy/config:/config
-  #     - ./data/caddy:/data
+  #     - ${DATA_DIR}/caddy:/data
+  #     - ${SOURCE_DIR}:/www/:rw
+  #     - ${LOGS_DIR}/caddy:/var/log/caddy
   #   ports:
   #     - "80:80"
   #     - "443:443"
