@@ -23,3 +23,19 @@ https://helloworld.com {
 https://helloworld2.com {
     reverse_proxy http://frps:8088
 }
+
+
+https://WordPress.com {
+        root * /www/WordPress
+        php_fastcgi php80:9000 {
+                trusted_proxies private_ranges
+        }
+        file_server
+        encode gzip
+        @disallowed {
+                path /xmlrpc.php
+                path *.sql
+                path /wp-content/uploads/*.php
+        }
+        rewrite @disallowed '/index.php'
+}
