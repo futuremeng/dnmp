@@ -51,24 +51,25 @@ services:
       #default:
       #  ipv4_address: 10.0.0.10
 
-  # caddy:
-  #   image: caddy:latest
-  #   container_name: caddy
-  #   restart: unless-stopped
-  #   environment:
-  #     - TZ=Asia/Shanghai
-  #   volumes:
-  #     - ./services/caddy/config:/config
-  #     - ./services/caddy/auth:/auth:ro  # 认证文件目录
-  #     - ./services/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
-  #     - ${DATA_DIR}/caddy:/data  # cert
-  #     - ${SOURCE_DIR}:/www/:rw  # www
-  #     - ${LOGS_DIR}/caddy:/log # log
-  #   ports:
-  #     - "80:80"
-  #     - "443:443"
-  #   networks:
-  #     - default
+  caddy:
+    container_name: caddy
+    build:
+      context: ./services/caddy
+    restart: unless-stopped
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - ./services/caddy/config:/config
+      - ./services/caddy/auth:/auth:ro  # 认证文件目录
+      - ./services/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - ${DATA_DIR}/caddy:/data  # cert
+      - ${SOURCE_DIR}:/www/:rw  # www
+      - ${LOGS_DIR}/caddy:/log # log
+    ports:
+      - "801:80"
+      - "4431:443"
+    networks:
+      - default
     
   # certbot:
   #   image: certbot/certbot
