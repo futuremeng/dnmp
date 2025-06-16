@@ -281,6 +281,23 @@ services:
   #     - "${MATOMO_HOST_PORT}:80"
   #   networks:
   #     - default
+  mysql5:
+ #  platform: linux/amd64  # 指定使用 amd64 平台,mac芯片m1-m4需要打开
+    image: mysql:${MYSQL5_VERSION}
+    container_name: testmysql5
+    ports:
+      - "${MYSQL5_HOST_PORT}:3306"
+    volumes:
+      - ${MYSQL5_CONF_FILE}:/etc/mysql/conf.d/mysql.cnf:ro
+      - ${DATA_DIR}/mysql5:/var/lib/mysql/:rw
+      - ${MYSQL5_LOG_DIR}:/var/log/mysql/:rw
+
+    networks:
+      - default
+    environment:
+      MYSQL_ROOT_PASSWORD: "${MYSQL5_ROOT_PASSWORD}"
+      MYSQL_ROOT_HOST: "${MYSQL5_ROOT_HOST}"
+      TZ: "$TZ"
 
 #  openresty:
 #    image:  openresty/openresty:${OPENRESTY_VERSION}
