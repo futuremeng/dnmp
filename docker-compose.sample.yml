@@ -81,11 +81,11 @@ services:
   #     - default
 
   php82:
-    image: registry.cn-beijing.aliyuncs.com/futuremeng/php:8.2.27
+    image: registry.cn-beijing.aliyuncs.com/futuremeng/php:8.4.11-fpm
     # build:
     #   context: ./services/php82
     #   args:
-    #     DEBIAN_MIRROR_DOMAIN: deb.debian.org
+    #     DEBIAN_MIRROR_DOMAIN: mirrors.ustc.edu.cn
     #     PHP_EXTENSIONS: "$PHP82_EXTENSIONS"
     #     TZ: "$TZ"
     container_name: php82
