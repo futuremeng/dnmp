@@ -614,10 +614,9 @@ services:
   #       - ${JENKINS_HOME_DIR}:/var/jenkins_home
   #       - ${JENKINS_CERTS_DIR}:/certs/client
   #       - ${SOURCE_DIR}:/www/:rw
-  #       - ${TOMCAT_WEBAPPS_DIR}:/webapps/:rw
+  #       #        - ${TOMCAT_WEBAPPS_DIR}:/webapps/:rw
   #       - /var/run/docker.sock:/var/run/docker.sock
   #       - /usr/bin/docker:/usr/bin/docker
-  #       - /usr/lib/x86_64-linux-gnu/libltdl.so.7:/usr/lib/x86_64-linux-gnu/libltdl.so.7
   #   ports:
   #       - "${JENKINS_HTTP_PORT}:8080"
   #   expose:
