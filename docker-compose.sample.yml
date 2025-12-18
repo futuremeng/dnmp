@@ -201,16 +201,19 @@ services:
   # postgres:
   #   restart: always
   #   image: postgres:14-alpine
+  #   container_name: postgres
   #   shm_size: 256mb
   #   networks:
   #     - default
   #   healthcheck:
   #     test: ["CMD", "pg_isready", "-U", "postgres"]
   #   volumes:
-  #     - ${DATA_DIR}/postgres14:/var/lib/postgresql/data
+  #     - ${DATA_DIR}/postgres14/data:/var/lib/postgresql/data
   #   environment:
   #     - "POSTGRES_HOST_AUTH_METHOD=trust"
-
+  #     - "TZ=${TZ}"
+  #   ports:
+  #     - "${POSTGRES_HOST_PORT}:5432"
 
   mysql:
     image: mysql:${MYSQL_VERSION}
