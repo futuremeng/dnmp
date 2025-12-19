@@ -9,8 +9,8 @@ QQ Exchange Group:
 *   Group 3:**878913761**(bit)
 
 **[\[ENGLISH\]](README-en.md)** -
-[**\[GitHub Address\]**](https://github.com/yeszao/dnmp) -
-[**\[Gitee address\]**](https://gitee.com/yeszao/dnmp)
+[**\[GitHub Address\]**](https://github.com/garylab/dnmp) -
+[**\[Gitee address\]**](https://gitee.com/garylab/dnmp)
 
 DNMP Project Features:
 
@@ -89,9 +89,9 @@ DNMP Project Features:
     *   `Docker`(The system needs to be Linux, Windows 10 Build 15063+, or MacOS 10.12+, and must be.)`64`bit)
     *   `docker-compose 1.7.0+`
 2.  `clone`Project:
-        $ git clone https://github.com/yeszao/dnmp.git
+        $ git clone https://github.com/garylab/dnmp.git
         # 假如速度太慢，可以使用加速拉取镜像
-        $ git clone https://github.com.cnpmjs.org/yeszao/dnmp.git
+        $ git clone https://github.com.cnpmjs.org/garylab/dnmp.git
 3.  If the host is a Linux system and the current user is not`root`Users, you also need to join the current user`docker`User Groups:
         $ sudo gpasswd -a ${USER} docker
 4.  Copy and name the configuration file (for Windows systems.)`copy`command), start:
@@ -331,7 +331,7 @@ Refer to the sample files
 4.  You can use a composer in any directory on the host:
     ```bash
     cd ~/dnmp/www/
-    composer create-project yeszao/fastphp project --no-dev
+    composer create-project garylab/fastphp project --no-dev
     ```
 5.  Optionally, the first time you use composer, it will be `~/dnmp/data/composer` Generate one under the directory**config.json**file, in which you can specify a domestic repository, for example:
     ```json
@@ -506,7 +506,7 @@ To use in a formal environment, please:
 
 ### 8.1 How to use curl in PHP code?
 
-Refer to this issue:<https://github.com/yeszao/dnmp/issues/91>
+Refer to this issue:<https://github.com/garylab/dnmp/issues/91>
 
 ### 8.2 Docker uses cron to time tasks
 

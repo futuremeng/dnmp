@@ -6,8 +6,8 @@ DNMP（Docker + Nginx/Openresty + MySQL5,8 + PHP5,7,8 + Redis + ElasticSearch + 
 <details>
 <summary>项目地址</summary>
 
-- [GitHub 地址](https://github.com/yeszao/dnmp)
-- [Gitee 地址](https://gitee.com/yeszao/dnmp)
+- [GitHub 地址](https://github.com/garylab/dnmp)
+- [Gitee 地址](https://gitee.com/garylab/dnmp)
 
 </details>
 
@@ -25,14 +25,14 @@ DNMP（Docker + Nginx/Openresty + MySQL5,8 + PHP5,7,8 + Redis + ElasticSearch + 
 
 1. `100%`开源
 2. `100%`遵循Docker标准
-3. 支持**多版本PHP**共存，可任意切换（PHP5.4、PHP5.6、PHP7.1、PHP7.2、PHP7.3、PHP7.4、PHP8.0)
+3. 支持**多版本PHP**共存，可任意切换（PHP5.4、PHP5.6、PHP7.1、PHP7.2、PHP7.3、PHP7.4、PHP8.0、PHP8.4)
 4. 支持绑定**任意多个域名**
 5. 支持**HTTPS和HTTP/2**
 6. **PHP源代码、MySQL数据、配置文件、日志文件**都可在Host中直接修改查看
 7. 内置**完整PHP扩展安装**命令
 8. 默认支持`pdo_mysql`、`mysqli`、`mbstring`、`gd`、`curl`、`opcache`等常用热门扩展，根据环境灵活配置
 9. 可一键选配常用服务：
-    - 多PHP版本：PHP5.4、PHP5.6、PHP7.0-7.4、PHP8.0
+    - 多PHP版本：PHP5.4、PHP5.6、PHP7.0-7.4、PHP8.0、PHP8.4
     - Web服务：Nginx、Openresty
     - 数据库：MySQL5、MySQL8、Redis、memcached、MongoDB、ElasticSearch
     - 消息队列：RabbitMQ
@@ -49,10 +49,16 @@ DNMP（Docker + Nginx/Openresty + MySQL5,8 + PHP5,7,8 + Redis + ElasticSearch + 
 - [目录](#目录)
   - [1.目录结构](#1目录结构)
   - [2.快速使用](#2快速使用)
+    - [1. 本地安装](#1-本地安装)
+    - [2. `clone`项目：](#2-clone项目)
+    - [3. 如果主机是 Linux系统，且当前用户不是`root`用户，还需将当前用户加入`docker`用户组：](#3-如果主机是-linux系统且当前用户不是root用户还需将当前用户加入docker用户组)
+    - [4. 拷贝并命名配置文件（Windows系统请用`copy`命令），启动：](#4-拷贝并命名配置文件windows系统请用copy命令启动)
+      - [5. 在浏览器中访问：`http://localhost`或`https://localhost`(自签名HTTPS演示)就能看到效果，PHP代码在文件`./www/localhost/index.php`。](#5-在浏览器中访问httplocalhost或httpslocalhost自签名https演示就能看到效果php代码在文件wwwlocalhostindexphp)
   - [3.PHP和扩展](#3php和扩展)
     - [3.1 切换Nginx使用的PHP版本](#31-切换nginx使用的php版本)
     - [3.2 安装PHP扩展](#32-安装php扩展)
     - [3.3 快速安装php扩展](#33-快速安装php扩展)
+  - [Supported PHP extensions](#supported-php-extensions)
     - [3.4 Host中使用php命令行（php-cli）](#34-host中使用php命令行php-cli)
     - [3.5 使用composer](#35-使用composer)
   - [4.管理命令](#4管理命令)
@@ -73,7 +79,9 @@ DNMP（Docker + Nginx/Openresty + MySQL5,8 + PHP5,7,8 + Redis + ElasticSearch + 
     - [8.3 Docker容器时间](#83-docker容器时间)
     - [8.4 如何连接MySQL和Redis服务器](#84-如何连接mysql和redis服务器)
     - [8.5 容器内的php如何连接宿主机MySQL](#85-容器内的php如何连接宿主机mysql)
-    - [8.6 SQLSTATE[HY000] [1130] Host '172.19.0.2' is not allowed to connect to this MySQL server](#86-sqlstatehy000-1130-host-1721902-is-not-allowed-to-connect-to-this-mysql-server)
+    - [8.6 SQLSTATE\[HY000\] \[1130\] Host '172.19.0.2' is not allowed to connect to this MySQL server](#86-sqlstatehy000-1130-host-1721902-is-not-allowed-to-connect-to-this-mysql-server)
+    - [8.7 Docker是如何生成容器名](#87-docker是如何生成容器名)
+  - [感谢 Navicat 对开源项目的赞助](#感谢-navicat-对开源项目的赞助)
   - [License](#license)
 
 
@@ -107,7 +115,7 @@ DNMP（Docker + Nginx/Openresty + MySQL5,8 + PHP5,7,8 + Redis + ElasticSearch + 
     - `docker-compose 1.7.0+`
 ### 2. `clone`项目：
     ```
-    $ git clone https://github.com/yeszao/dnmp.git
+    $ git clone https://github.com/garylab/dnmp.git
     ```
 ### 3. 如果主机是 Linux系统，且当前用户不是`root`用户，还需将当前用户加入`docker`用户组：
     ```
@@ -117,10 +125,9 @@ DNMP（Docker + Nginx/Openresty + MySQL5,8 + PHP5,7,8 + Redis + ElasticSearch + 
     ```
     $ cd dnmp                                           # 进入项目目录
     $ cp env.sample .env                                # 复制环境变量文件。note:安装php扩展请查看文档中的3.2小节
-    $ cp docker-compose.sample.yml docker-compose.yml   # 复制 docker-compose 配置文件。默认启动3个服务：
-                                                        # Nginx、PHP7和MySQL8。要开启更多其他服务，如Redis、
-                                                        # PHP5.6、PHP5.4、MongoDB，ElasticSearch等，请删
-                                                        # 除服务块前的注释
+    $ cp docker-compose.sample.yml docker-compose.yml   # 复制 docker-compose 配置文件。默认启动5个服务：
+                                                        # Nginx、PHP 8.4、MySQL、MySQL5、Redis。要开启更多其他服务，如
+                                                        # PHP5.6、PHP5.4、MongoDB，ElasticSearch等，请删除服务块前的注释
     $ docker-compose up                                 # 启动
     ```
 #### 5. 在浏览器中访问：`http://localhost`或`https://localhost`(自签名HTTPS演示)就能看到效果，PHP代码在文件`./www/localhost/index.php`。
@@ -369,7 +376,7 @@ install-php-extensions apcu
 4. 在主机的任何目录下就能用composer了：
     ```bash
     cd ~/dnmp/www/
-    composer create-project yeszao/fastphp project --no-dev
+    composer create-project garylab/fastphp project --no-dev
     ```
 5. （可选）第一次使用 composer 会在 `~/dnmp/data/composer` 目录下生成一个**config.json**文件，可以在这个文件中指定国内仓库，例如：
     ```json
@@ -526,7 +533,7 @@ Redis连接信息如下：
 
 ## 8 常见问题
 ### 8.1 如何在PHP代码中使用curl？
-参考这个issue：[https://github.com/yeszao/dnmp/issues/91](https://github.com/yeszao/dnmp/issues/91)
+参考这个issue：[https://github.com/garylab/dnmp/issues/91](https://github.com/garylab/dnmp/issues/91)
 
 ### 8.2 Docker使用cron定时任务 
 [Docker使用cron定时任务](https://www.awaimai.com/2615.html)
