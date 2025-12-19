@@ -2,28 +2,30 @@ version: "3"
 services:
 
   # 这个是服务端，只在服务器端部署，接进来的端口可以直接在nginx或者caddy中通过容器名加端口就可以访问或者设置代理
-  frps:
-    restart: unless-stopped
-    image: snowdreamtech/frps
-    container_name: frps
-    volumes:
-      - ./services/frps/frps.toml:/etc/frp/frps.toml
-    ports:
-      - 7000:7000
-      - 7500:7500
-    networks:
-      - default # 默认为 service_name + network_name = frps_default
+  # frps:
+  #   restart: unless-stopped
+  #   image: snowdreamtech/frps
+  #   container_name: frps
+  #   volumes:
+  #     - ./services/frps/frps.toml:/etc/frp/frps.toml
+  #   ports:
+  #     - 7000:7000
+  #     - 7500:7500
+  #   networks:
+  #     - default # 默认为 service_name + network_name = frps_default
 
-  # 这个是客户端，在客户端部署，为的是把客户端的某个端口发布到前面的frps上去
-  frpc:
-    restart: unless-stopped
-    image: snowdreamtech/frpc
-    container_name: frpc
-    volumes:
-      - ./services/frpc/frpc.toml:/etc/frp/frpc.toml
-    # ports:
-    #   - 7400:7400
+  # # 这个是客户端，在客户端部署，为的是把客户端的某个端口发布到前面的frps上去
+  # frpc:
+  #   restart: unless-stopped
+  #   image: snowdreamtech/frpc
+  #   container_name: frpc
+  #   volumes:
+  #     - ./services/frpc/frpc.toml:/etc/frp/frpc.toml
+  #   # ports:
+  #   #   - 7400:7400
 
+
+  # 不需要自动化的SSL时优先使用Nginx
   nginx:
     build:
       context: ./services/nginx
@@ -51,35 +53,31 @@ services:
       #default:
       #  ipv4_address: 10.0.0.10
 
-  caddy:
-    image: registry.cn-beijing.aliyuncs.com/futuremeng/caddy:latest
-    container_name: caddy
-    build:
-      context: ./services/caddy
-    restart: unless-stopped
-    environment:
-      - TZ=Asia/Shanghai
-    volumes:
-      - ./services/caddy/config:/config
-      - ./services/caddy/auth:/auth:ro  # 认证文件目录
-      - ./services/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
-      - ${DATA_DIR}/caddy:/data  # cert
-      - ${SOURCE_DIR}:/www/:rw  # www
-      - ${LOGS_DIR}/caddy:/log # log
-    ports:
-      - "801:80"
-      - "4431:443"
-    networks:
-      - default
-    
-  # certbot:
-  #   image: certbot/certbot
+  # 想用自动化SSL时请使用Caddy
+  # caddy:
+  #   image: registry.cn-beijing.aliyuncs.com/futuremeng/caddy:latest
+  #   container_name: caddy
+  #   build:
+  #     context: ./services/caddy
+  #   restart: unless-stopped
+  #   environment:
+  #     - TZ=Asia/Shanghai
   #   volumes:
-  #     - ./data/certbot/conf:/etc/letsencrypt
-  #     - ./data/certbot/www:/var/www/certbot
+  #     - ./services/caddy/config:/config
+  #     - ./services/caddy/auth:/auth:ro  # 认证文件目录
+  #     - ./services/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+  #     - ${DATA_DIR}/caddy:/data  # cert
+  #     - ${SOURCE_DIR}:/www/:rw  # www
+  #     - ${LOGS_DIR}/caddy:/log # log
+  #   ports:
+  #     - "801:80"
+  #     - "4431:443"
   #   networks:
   #     - default
 
+
+
+  # 尽管已经用了最新的php8.4，但仍然保留php82的配置
   php82:
     image: registry.cn-beijing.aliyuncs.com/futuremeng/php:8.4.11-fpm
     # build:
@@ -215,6 +213,7 @@ services:
   #   ports:
   #     - "${POSTGRES_HOST_PORT}:5432"
 
+  # MySQL database service
   mysql:
     image: mysql:${MYSQL_VERSION}
     container_name: mysql
@@ -286,6 +285,8 @@ services:
   #     - "${MATOMO_HOST_PORT}:80"
   #   networks:
   #     - default
+
+  # MySQL 5 database service
   mysql5:
  #  platform: linux/amd64  # 指定使用 amd64 平台,mac芯片m1-m4需要打开
     image: mysql:${MYSQL5_VERSION}
@@ -339,6 +340,8 @@ services:
   #   networks:
   #     - default
 
+
+  # 配置了密码的版本，建议用这种，更安全
   redis:
     image: redis:${REDIS_VERSION}-alpine
     container_name: redis
@@ -597,18 +600,18 @@ services:
   #   networks:
   #     - default
 
-# imageproxy: 
-#   image: willnorris/imageproxy
-#   container_name: imageproxy
-#   restart: always
-#   command: -baseURL http://minio:9000/ -addr 0.0.0.0:8080 -cache s3://fake-region/${MINIO_BUCKET_IMAGE_CACHE}?endpoint=minio:9000&disableSSL=1&s3ForcePathStyle=1
-#   environment:
-#     AWS_ACCESS_KEY_ID: ${MINIO_ACCESS_KEY}
-#     AWS_SECRET_KEY: ${MINIO_SECRET_KEY} 
-#   ports: 
-#     - "${MINIO_IMAGE_PROXY_PORT}:8080"
-#   networks:
-#     - default
+  # imageproxy: 
+  #   image: willnorris/imageproxy
+  #   container_name: imageproxy
+  #   restart: always
+  #   command: -baseURL http://minio:9000/ -addr 0.0.0.0:8080 -cache s3://fake-region/${MINIO_BUCKET_IMAGE_CACHE}?endpoint=minio:9000&disableSSL=1&s3ForcePathStyle=1
+  #   environment:
+  #     AWS_ACCESS_KEY_ID: ${MINIO_ACCESS_KEY}
+  #     AWS_SECRET_KEY: ${MINIO_SECRET_KEY} 
+  #   ports: 
+  #     - "${MINIO_IMAGE_PROXY_PORT}:8080"
+  #   networks:
+  #     - default
 
   # jenkins:
   #   image: jenkins/jenkins:${JENKINS_VERSION}
