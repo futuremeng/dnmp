@@ -8,7 +8,7 @@ ARG DEBIAN_MIRROR_DOMAIN
 ENV TZ=${TZ}
 
 # Set debian mirror
-RUN sed -i "s|deb.debian.org|${DEBIAN_MIRROR_DOMAIN}|g" /etc/apt/sources.list.d/debian.sources
+RUN if [ -n "${DEBIAN_MIRROR_DOMAIN}" ]; then sed -i "s|deb.debian.org|${DEBIAN_MIRROR_DOMAIN}|g" /etc/apt/sources.list.d/debian.sources; fi
 
 # Install required packages
 RUN export option="--no-install-recommends -y" \
