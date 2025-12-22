@@ -169,7 +169,19 @@ docker-compose build php
 ```
 使用proxy构建
 ```bash
-export http_proxy=http://127.0.0.1:1234 && export https_proxy=http://127.0.0.1:1234 && docker-compose build php
+export http_proxy=http://127.0.0.1:1234 && export https_proxy=http://127.0.0.1:1234 && docker compose build php
+```
+多平台构建（支持AMD64和ARM64）
+```bash
+# 创建多平台builder（如果不存在）
+docker buildx create --use --name multi-platform-builder
+docker buildx inspect --bootstrap
+
+# 构建并推送多平台镜像
+docker buildx build --platform linux/amd64,linux/arm64 -t your-registry/php:tag --push ./services/php82
+
+# 比如
+docker buildx build --platform linux/amd64,linux/arm64 -t registry.cn-beijing.aliyuncs.com/futuremeng/php:8.4.16-fpm --push ./services/php82
 ```
 可用的扩展请看同文件的`env.sample`注释块说明。
 
