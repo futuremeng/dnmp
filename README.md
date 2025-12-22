@@ -167,6 +167,10 @@ PHP54_EXTENSIONS=opcache,redis                 # PHP 5.4要安装的扩展列表
 ```bash
 docker-compose build php
 ```
+使用proxy构建
+```bash
+export http_proxy=http://127.0.0.1:1234 && export https_proxy=http://127.0.0.1:1234 && docker-compose build php
+```
 可用的扩展请看同文件的`env.sample`注释块说明。
 
 ### 3.3 快速安装php扩展
