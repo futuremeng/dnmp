@@ -1,0 +1,4 @@
+-- 初始化脚本：启用PostGIS和pgRouting扩展
+CREATE EXTENSION IF NOT EXISTS postgis;
+CREATE EXTENSION IF NOT EXISTS postgis_topology;
+CREATE EXTENSION IF NOT EXISTS pgrouting;
