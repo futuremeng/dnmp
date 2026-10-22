@@ -1,4 +1,3 @@
-version: "3"
 services:
 
   # 这个是服务端，只在服务器端部署，接进来的端口可以直接在nginx或者caddy中通过容器名加端口就可以访问或者设置代理
@@ -84,7 +83,7 @@ services:
     #   context: ./services/php82
     #   args:
     #     PHP_VERSION: php:${PHP82_VERSION}-fpm
-    #     DEBIAN_MIRROR_DOMAIN: mirrors.ustc.edu.cn
+    #     DEBIAN_MIRROR_DOMAIN: ${CONTAINER_PACKAGE_URL}
     #     PHP_EXTENSIONS: "$PHP82_EXTENSIONS"
     #     TZ: "$TZ"
     container_name: php82
