@@ -7,8 +7,21 @@ ARG DEBIAN_MIRROR_DOMAIN
 
 ENV TZ=${TZ}
 
-# Set debian mirror
-RUN if [ -n "${DEBIAN_MIRROR_DOMAIN}" ]; then sed -i "s|deb.debian.org|${DEBIAN_MIRROR_DOMAIN}|g" /etc/apt/sources.list.d/debian.sources; fi
+# Set debian mirror (use https to avoid plain-http flakiness/rate-limiting on CN mirrors)
+RUN set -eux; \
+    if [ -n "${DEBIAN_MIRROR_DOMAIN}" ]; then \
+        for f in /etc/apt/sources.list.d/debian.sources /etc/apt/sources.list; do \
+            if [ -f "$f" ]; then \
+                sed -i \
+                    -e "s|http://deb.debian.org|https://${DEBIAN_MIRROR_DOMAIN}|g" \
+                    -e "s|https://deb.debian.org|https://${DEBIAN_MIRROR_DOMAIN}|g" \
+                    -e "s|deb.debian.org|${DEBIAN_MIRROR_DOMAIN}|g" \
+                    "$f"; \
+            fi; \
+        done; \
+    fi; \
+    mkdir -p /etc/apt/apt.conf.d; \
+    printf 'Acquire::Retries "5";\nAcquire::http::Timeout "30";\nAcquire::https::Timeout "30";\nAcquire::ForceIPv4 "true";\n' > /etc/apt/apt.conf.d/99dnmp-retries
 
 # Install required packages
 RUN export option="--no-install-recommends -y" \
