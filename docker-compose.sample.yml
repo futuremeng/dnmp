@@ -86,7 +86,8 @@ services:
       args:
         PHP_VERSION: ${PHP82_BASE_IMAGE:-php}:${PHP82_VERSION}-fpm
         DEBIAN_MIRROR_DOMAIN: ${CONTAINER_PACKAGE_URL}
-        PHP_EXTENSIONS: "$PHP82_EXTENSIONS"
+        PHP_EXTENSIONS: "${PHP82_EXTENSIONS}"
+        INSTALLER_URLS: ${PHP82_INSTALLER_URLS}
         TZ: "$TZ"
     container_name: php82
     expose:
