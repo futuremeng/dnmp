@@ -61,6 +61,8 @@ services:
   #   restart: unless-stopped
   #   environment:
   #     - TZ=Asia/Shanghai
+  #     - "ALIDNS_KEY_ID=${ALIDNS_KEY_ID:?set in .env}"
+  #     - "ALIDNS_KEY_SECRET=${ALIDNS_KEY_SECRET:?set in .env}"
   #   volumes:
   #     - ./services/caddy/config:/config
   #     - ./services/caddy/auth:/auth:ro  # 认证文件目录
